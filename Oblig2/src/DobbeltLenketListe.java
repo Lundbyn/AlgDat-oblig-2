@@ -61,7 +61,7 @@ public class DobbeltLenketListe<T> implements Liste<T>
         if(a[i] == null) {
             return;
         }
-        hode = hale = new Node<>(a[i], null, null);
+        hode = hale = new Node<>(a[i]);
         antall++;
         Node<T> p = hale;
 
@@ -97,7 +97,21 @@ public class DobbeltLenketListe<T> implements Liste<T>
     @Override
     public boolean leggInn(T verdi)
     {
-        throw new UnsupportedOperationException("Ikke laget ennå!");
+        Objects.requireNonNull(verdi, "Verdien kan ikke være null!");
+
+        if(tom()) {
+            Node<T> p = new Node<>(verdi,null,null);
+            hode = p;
+            hale = p;
+        }
+        else {
+            Node<T> p = new Node<>(verdi, hale, null);
+            hale.neste = p;
+            hale = p;
+        }
+        endringer++;
+        antall++;
+        return true;
     }
 
     @Override
@@ -151,12 +165,44 @@ public class DobbeltLenketListe<T> implements Liste<T>
     @Override
     public String toString()
     {
-        throw new UnsupportedOperationException("Ikke laget ennå!");
+        StringBuilder s = new StringBuilder();
+        s.append('[');
+
+        if(!tom()) {
+
+            Node<T> p = hode;
+            s.append(p.verdi);
+            p = p.neste;
+            for (int i = 0; i < antall-1; i++) {
+                s.append(", ");
+                s.append(p.verdi);
+                p = p.neste;
+            }
+        }
+
+        s.append(']');
+        return s.toString();
     }
 
     public String omvendtString()
     {
-        throw new UnsupportedOperationException("Ikke laget ennå!");
+        StringBuilder s = new StringBuilder();
+        s.append('[');
+
+        if(!tom()) {
+
+            Node<T> p = hale;
+            s.append(p.verdi);
+            p = p.forrige;
+            for (int i = 0; i < antall-1; i++) {
+                s.append(", ");
+                s.append(p.verdi);
+                p = p.forrige;
+            }
+        }
+
+        s.append(']');
+        return s.toString();
     }
 
     public static <T> void sorter(Liste<T> liste, Comparator<? super T> c)
