@@ -35,7 +35,21 @@ public class DobbeltLenketListe<T> implements Liste<T>
     // hjelpemetode
     private Node<T> finnNode(int indeks)
     {
-        throw new UnsupportedOperationException("Ikke laget ennå!");
+        int i = antall / 2;
+        if (indeks < i) {
+            Node<T> p = hode;
+            for(int j = 0; j < indeks; j++) {
+                p = p.neste;
+            }
+            return p;
+        }
+        else {
+            Node<T> p = hale;
+            for(int j = antall - 1; j > indeks; j--) {
+                p = p.forrige;
+            }
+            return p;
+        }
     }
 
     // konstruktør
@@ -79,7 +93,22 @@ public class DobbeltLenketListe<T> implements Liste<T>
     // subliste
     public Liste<T> subliste(int fra, int til)
     {
-        throw new UnsupportedOperationException("Ikke laget ennå!");
+
+        fratilKontroll(antall, fra, til);
+
+        Node<T> p = hode;
+        for(int i = 0; i < fra; i++) {
+            p = p.neste;
+        }
+
+        DobbeltLenketListe<T> liste = new DobbeltLenketListe<>();
+
+        for(int i = fra; i < til; i++) {
+            liste.leggInn(p.verdi);
+            p = p.neste;
+        }
+
+        return liste;
     }
 
     @Override
@@ -129,7 +158,8 @@ public class DobbeltLenketListe<T> implements Liste<T>
     @Override
     public T hent(int indeks)
     {
-        throw new UnsupportedOperationException("Ikke laget ennå!");
+        indeksKontroll(indeks,false);
+        return finnNode(indeks).verdi;
     }
 
     @Override
@@ -141,7 +171,14 @@ public class DobbeltLenketListe<T> implements Liste<T>
     @Override
     public T oppdater(int indeks, T nyverdi)
     {
-        throw new UnsupportedOperationException("Ikke laget ennå!");
+        indeksKontroll(indeks, false);
+        Objects.requireNonNull(nyverdi, "Verdien kan ikke være null!");
+
+        Node<T> p = finnNode(indeks);
+        T gammelverdi = p.verdi;
+        p.verdi = nyverdi;
+        endringer++;
+        return gammelverdi;
     }
 
     @Override
@@ -259,4 +296,19 @@ public class DobbeltLenketListe<T> implements Liste<T>
 
     } // DobbeltLenketListeIterator
 
+
+    private static void fratilKontroll(int antall, int fra, int til)
+    {
+        if (fra < 0)                                  // fra er negativ
+            throw new IndexOutOfBoundsException
+                    ("fra(" + fra + ") er negativ!");
+
+        if (til > antall)                          // til er utenfor tabellen
+            throw new IndexOutOfBoundsException
+                    ("til(" + til + ") > Antall(" + antall + ")");
+
+        if (fra > til)                                // fra er større enn til
+            throw new IllegalArgumentException
+                    ("fra(" + fra + ") > til(" + til + ") - illegalt intervall!");
+    }
 } // DobbeltLenketListe 
