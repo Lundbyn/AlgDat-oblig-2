@@ -49,8 +49,32 @@ public class DobbeltLenketListe<T> implements Liste<T>
     // konstruktør
     public DobbeltLenketListe(T[] a)
     {
-        throw new UnsupportedOperationException("Ikke laget ennå!");
+        //this();
+        Objects.requireNonNull(a, "Tabellen a er null!");
+        if (a.length == 0) return;
+        int i = a.length - 1;
+        for(; i > 0; i--) {
+            if(a[i] != null) {
+                break;
+            }
+        }
+        if(a[i] == null) {
+            return;
+        }
+        hode = hale = new Node<>(a[i], null, null);
+        antall++;
+        Node<T> p = hale;
+
+        for(i--; i >= 0; i--) {
+            if(a[i] != null) {
+                hode = new Node<T>(a[i], null, hode);
+                p.forrige = hode;
+                p = hode;
+                antall++;
+            }
+        }
     }
+
 
     // subliste
     public Liste<T> subliste(int fra, int til)
@@ -61,13 +85,13 @@ public class DobbeltLenketListe<T> implements Liste<T>
     @Override
     public int antall()
     {
-        throw new UnsupportedOperationException("Ikke laget ennå!");
+        return antall;
     }
 
     @Override
     public boolean tom()
     {
-        throw new UnsupportedOperationException("Ikke laget ennå!");
+        return antall == 0;
     }
 
     @Override
