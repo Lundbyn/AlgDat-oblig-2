@@ -227,19 +227,117 @@ public class DobbeltLenketListe<T> implements Liste<T>
     @Override
     public boolean fjern(T verdi)
     {
-        throw new UnsupportedOperationException("Ikke laget ennå!");
+        if(verdi == null || tom()) {
+            return false;
+        }
+        Node<T> p = hode;
+        Node<T> q = hode;
+        for(int i = 0; i < antall; i++) {
+            if(verdi.equals(q.verdi)) {
+                if(antall == 1) {
+                    hode = null;
+                    hale = null;
+                }
+                else {
+                    if(i == 0) {
+                        hode = hode.neste;
+                        hode.forrige = null;
+                    }
+                    else if(i == antall - 1) {
+                        hale = hale.forrige;
+                        hale.neste = null;
+                    }
+                    else {
+                        p.neste = q.neste;
+                        p.neste.forrige = p;
+                        q = null;
+                    }
+                }
+                endringer++;
+                antall--;
+                return true;
+            }
+            p = q;
+            q = q.neste;
+        }
+
+        return false;
     }
 
     @Override
     public T fjern(int indeks)
     {
-        throw new UnsupportedOperationException("Ikke laget ennå!");
+        if(tom()) {
+            throw new IndexOutOfBoundsException("Listen er allerede tom");
+        }
+        if(indeks < 0 || indeks >= antall) {
+            throw new IndexOutOfBoundsException("Feil i indeks");
+        }
+
+        T verdi = null;
+
+        if(antall == 1) {
+            verdi = hode.verdi;
+            hode = null;
+            hale = null;
+        }
+        else {
+            if(indeks == 0) {
+                verdi = hode.verdi;
+                hode = hode.neste;
+                hode.forrige = null;
+            }
+            else if(indeks == antall-1) {
+                verdi = hale.verdi;
+                hale = hale.forrige;
+                hale.neste = null;
+            }
+            else {
+                Node<T> p = hode;
+                Node<T> q = hode;
+                for(int i = 0; i < indeks; i++) {
+                    p = q;
+                    q = q.neste;
+                }
+                verdi = q.verdi;
+                p.neste = q.neste;
+                p.neste.forrige = p;
+                q = null;
+            }
+        }
+        antall--;
+        endringer++;
+
+        return verdi;
+
     }
 
     @Override
     public void nullstill()
     {
-        throw new UnsupportedOperationException("Ikke laget ennå!");
+/*
+        double tic = System.currentTimeMillis();
+        while (hode != null) {
+            fjern(0);
+        }
+        double toc = System.currentTimeMillis();
+        double tid = toc-tic;
+*/
+
+//Denne er raskere enn den metoden over.
+        double tic = System.currentTimeMillis();
+        int antall_start = antall;
+        Node<T> p = hode;
+        Node<T> q = hode;
+        for(int i = 0; i < antall_start; i++) {
+            p = q;
+            q = q.neste;
+
+            p = null;
+            antall--;
+        }
+        double toc = System.currentTimeMillis();
+        double tid = toc-tic;
     }
 
     @Override

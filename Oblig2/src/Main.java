@@ -2,9 +2,13 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Character[] c = {'A','B','D'};
-        DobbeltLenketListe<Character> liste = new DobbeltLenketListe<>(c);
-        liste.leggInn(2,'C');
+        String[] c = new String[10000000];
+        for(int i = 0; i < c.length; i++) {
+            c[i] = "Jamann";
+        }
+        DobbeltLenketListe<String> liste = new DobbeltLenketListe<>(c);
+        System.out.println(liste.toString());
+        liste.nullstill();
         System.out.println(liste.toString());
     }
 }
