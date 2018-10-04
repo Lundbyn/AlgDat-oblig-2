@@ -3,6 +3,7 @@ import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
+import java.util.function.Predicate;
 
 public class DobbeltLenketListe<T> implements Liste<T>
 {
@@ -152,7 +153,7 @@ public class DobbeltLenketListe<T> implements Liste<T>
     @Override
     public boolean inneholder(T verdi)
     {
-        throw new UnsupportedOperationException("Ikke laget ennå!");
+        return indeksTil(verdi) != -1;
     }
 
     @Override
@@ -165,7 +166,16 @@ public class DobbeltLenketListe<T> implements Liste<T>
     @Override
     public int indeksTil(T verdi)
     {
-        throw new UnsupportedOperationException("Ikke laget ennå!");
+        if(verdi == null) return -1;
+
+        Node<T> p = hode;
+        for(int i = 0; i < antall; i++) {
+            if(verdi.equals(p.verdi)) {
+                return i;
+            }
+            p = p.neste;
+        }
+        return -1;
     }
 
     @Override
