@@ -2,13 +2,12 @@ public class Main {
 
     public static void main(String[] args) {
 
-        String[] c = new String[10000000];
-        for(int i = 0; i < c.length; i++) {
-            c[i] = "Jamann";
-        }
-        DobbeltLenketListe<String> liste = new DobbeltLenketListe<>(c);
-        System.out.println(liste.toString());
-        liste.nullstill();
-        System.out.println(liste.toString());
+        String[] navn = {"Lars","Anders","Bodil","Kari","Per","Berit"};   Liste<String> liste = new DobbeltLenketListe<>(navn);
+
+        liste.forEach(s -> System.out.print(s + " "));   System.out.println();   for (String s : liste) System.out.print(s + " ");
+
+        // Utskrift:
+        // Lars Anders Bodil Kari Per Berit
+        // Lars Anders Bodil Kari Per Berit
     }
 }

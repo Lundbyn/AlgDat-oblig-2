@@ -34,6 +34,7 @@ public class DobbeltLenketListe<T> implements Liste<T>
     private int endringer;   // antall endringer i listen
 
     // hjelpemetode
+    //oppgave 3 a
     private Node<T> finnNode(int indeks)
     {
         int i = antall / 2;
@@ -61,6 +62,7 @@ public class DobbeltLenketListe<T> implements Liste<T>
         endringer = 0;
     }
 
+    //Oppgave 1
     // konstruktør
     public DobbeltLenketListe(T[] a)
     {
@@ -92,6 +94,7 @@ public class DobbeltLenketListe<T> implements Liste<T>
 
 
     // subliste
+    //Oppgave 3 b
     public Liste<T> subliste(int fra, int til)
     {
 
@@ -112,6 +115,7 @@ public class DobbeltLenketListe<T> implements Liste<T>
         return liste;
     }
 
+    //Oppgave 1
     @Override
     public int antall()
     {
@@ -124,6 +128,7 @@ public class DobbeltLenketListe<T> implements Liste<T>
         return antall == 0;
     }
 
+    //Oppgave 2 b
     @Override
     public boolean leggInn(T verdi)
     {
@@ -144,6 +149,7 @@ public class DobbeltLenketListe<T> implements Liste<T>
         return true;
     }
 
+    //Oppgave 5
     @Override
     public void leggInn(int indeks, T verdi)
     {
@@ -183,12 +189,14 @@ public class DobbeltLenketListe<T> implements Liste<T>
         endringer++;
     }
 
+    //Oppgave 4
     @Override
     public boolean inneholder(T verdi)
     {
         return indeksTil(verdi) != -1;
     }
 
+    //Oppgave 3 a
     @Override
     public T hent(int indeks)
     {
@@ -196,6 +204,7 @@ public class DobbeltLenketListe<T> implements Liste<T>
         return finnNode(indeks).verdi;
     }
 
+    //Oppgave 4
     @Override
     public int indeksTil(T verdi)
     {
@@ -211,6 +220,7 @@ public class DobbeltLenketListe<T> implements Liste<T>
         return -1;
     }
 
+    //Oppgave 3 a
     @Override
     public T oppdater(int indeks, T nyverdi)
     {
@@ -224,6 +234,7 @@ public class DobbeltLenketListe<T> implements Liste<T>
         return gammelverdi;
     }
 
+    //Oppgave 6
     @Override
     public boolean fjern(T verdi)
     {
@@ -312,6 +323,7 @@ public class DobbeltLenketListe<T> implements Liste<T>
 
     }
 
+    //Oppgave 7
     @Override
     public void nullstill()
     {
@@ -335,11 +347,13 @@ public class DobbeltLenketListe<T> implements Liste<T>
 
             p = null;
             antall--;
+            endringer++;
         }
         double toc = System.currentTimeMillis();
         double tid = toc-tic;
     }
 
+    //Oppgave 2 a
     @Override
     public String toString()
     {
@@ -388,15 +402,18 @@ public class DobbeltLenketListe<T> implements Liste<T>
         throw new UnsupportedOperationException("Ikke laget ennå!");
     }
 
+    //Oppgave 8 b
     @Override
     public Iterator<T> iterator()
     {
-        throw new UnsupportedOperationException("Ikke laget ennå!");
+        return new DobbeltLenketListeIterator();
     }
 
+    //Oppgave 8 d
     public Iterator<T> iterator(int indeks)
     {
-        throw new UnsupportedOperationException("Ikke laget ennå!");
+        indeksKontroll(indeks, false);
+        return new DobbeltLenketListeIterator(indeks);
     }
 
     private class DobbeltLenketListeIterator implements Iterator<T>
@@ -412,9 +429,16 @@ public class DobbeltLenketListe<T> implements Liste<T>
             iteratorendringer = endringer;  // teller endringer
         }
 
+        //Oppgave 8 c
         private DobbeltLenketListeIterator(int indeks)
         {
-            throw new UnsupportedOperationException("Ikke laget ennå!");
+            Node<T> p = hode;
+            for (int i = 0; i < indeks; i++) {
+                p = p.neste;
+            }
+            denne = p;
+            fjernOK = false;
+            iteratorendringer = endringer;
         }
 
         @Override
@@ -423,18 +447,33 @@ public class DobbeltLenketListe<T> implements Liste<T>
             return denne != null;  // denne koden skal ikke endres!
         }
 
+        //Oppgave 8 a
         @Override
         public T next()
         {
-            throw new UnsupportedOperationException("Ikke laget ennå!");
+            if(endringer != iteratorendringer) {
+                throw new ConcurrentModificationException("Lenken har blitt endret");
+            }
+            if(!hasNext()) {
+                throw new NoSuchElementException("Lenken har ikke flere elementer");
+            }
+
+            T verdi = denne.verdi;
+            denne = denne.neste;
+            return verdi;
         }
 
+        //Oppgave 9
         @Override
-        public void remove()
-        {
-            throw new UnsupportedOperationException("Ikke laget ennå!");
+        public void remove() {
+            //Uferdig
+            if (!fjernOK) {
+                throw new IllegalStateException("Kan ikke fjernes");
+            }
+            if (endringer != iteratorendringer) {
+                throw new ConcurrentModificationException("Kan ikke fjernes");
+            }
         }
-
     } // DobbeltLenketListeIterator
 
 
