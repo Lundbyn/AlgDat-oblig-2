@@ -285,7 +285,7 @@ public class DobbeltLenketListe<T> implements Liste<T>
             throw new IndexOutOfBoundsException("Feil i indeks");
         }
 
-        T verdi = null;
+        T verdi;
 
         if(antall == 1) {
             verdi = hode.verdi;
@@ -397,9 +397,20 @@ public class DobbeltLenketListe<T> implements Liste<T>
         return s.toString();
     }
 
-    public static <T> void sorter(Liste<T> liste, Comparator<? super T> c)
-    {
-        throw new UnsupportedOperationException("Ikke laget ennå!");
+    //Oppgave 10
+    public static <T> void sorter (Liste<T> liste, Comparator<? super T> c){
+        for (int n = liste.antall(); n > 0; n--){       //Ittererer gjennom listen n antall ganger.
+            Iterator<T> iterator = liste.iterator();    //Oppretter ny iterator hver gang
+            int m = 0;                                  //Setter temp m(indeks til minsteverdi) til 0
+            T minverdi = iterator.next();               //Setter temp minsteverdi til første verdi i lenken.
+            for (int i = 1; i < n; i++){                //Itterer gjennom resten av lenken frem til n
+                T verdi = iterator.next();
+                if (c.compare(verdi,minverdi) < 0){
+                    m = i; minverdi = verdi;
+                }
+            }
+            liste.leggInn(liste.fjern(m));  //Fjerner fjerner minste verdien fra lista og legger den til bakerst.
+        }
     }
 
     //Oppgave 8 b
@@ -460,19 +471,44 @@ public class DobbeltLenketListe<T> implements Liste<T>
 
             T verdi = denne.verdi;
             denne = denne.neste;
+            fjernOK = true;
             return verdi;
         }
 
         //Oppgave 9
         @Override
         public void remove() {
-            //Uferdig
             if (!fjernOK) {
                 throw new IllegalStateException("Kan ikke fjernes");
             }
             if (endringer != iteratorendringer) {
                 throw new ConcurrentModificationException("Kan ikke fjernes");
             }
+            fjernOK = false;
+
+            if(antall == 1) {           //Sjekker det bare er en node i lenken. Dersom denne fjernes er lenken tom.
+                hode = hale = null;
+            }
+            else if(denne == null) {    //Sjekker om siste node skal fjernes.
+                hale = hale.forrige;
+                hale.neste = null;
+            }
+            else if(denne.forrige == hode) {    //Sjekker om første node skal fjernes
+                hode = hode.neste;
+                hode.forrige = null;
+            }
+            else {
+                Node<T> q = denne.forrige;  //q fjernes
+                Node<T> p = q.forrige;      //p er noden før q
+                Node<T> r = denne;          //r(denne) er noden etter q
+
+                p.neste = r;                 //Setter enderer pekere
+                r.forrige = p;
+                //q har ikke lenger noen pekere og fjernes av garbage collector
+            }
+            endringer++;
+            iteratorendringer++;
+            antall--;
         }
     } // DobbeltLenketListeIterator
 
