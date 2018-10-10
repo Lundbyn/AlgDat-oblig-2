@@ -1,0 +1,71 @@
+commit a45c0f0a29f903d553e96cf61f1c61d57db5244d (HEAD -> master, origin/master)
+Author: Mezzeto <Mathias_Lundby@hotmail.com>
+Date:   Wed Oct 10 11:05:50 2018 +0200
+
+    Fikset bug i oppgave 7
+
+    Fikset bug og la til nødvendige txt-filer. Klar til levering
+
+commit c161bbd7f59a22a1db6057e65f8bae1ea19c8d20
+Author: Mezzeto <Mathias_Lundby@hotmail.com>
+Date:   Wed Oct 10 10:32:29 2018 +0200
+
+    Oppgave 9 og 10 ferdig
+
+    Oblig ferdig og består tester
+
+commit 571ab629381da48da4b4119c4a10d657e3d3a1a5
+Author: Mezzeto <Mathias_Lundby@hotmail.com>
+Date:   Fri Oct 5 10:38:13 2018 +0200
+
+    Oppgave 8 ferdig, 9 startet
+
+    Oppgave 8 ferdig, 9 startet
+
+commit e1d0052ea03d274894e4571f134248cf97caa863
+Author: Mezzeto <Mathias_Lundby@hotmail.com>
+Date:   Thu Oct 4 18:52:28 2018 +0200
+
+    Oppgave 6 og 7 ferdig
+
+    Oppgave 6 og 7 ferdig
+
+commit 52deef2033bb91ca31c76310bee116ec8307597e
+Author: Mezzeto <Mathias_Lundby@hotmail.com>
+Date:   Thu Oct 4 17:21:35 2018 +0200
+
+    Oppgave 5 ferdig
+
+    Oppgave 5 ferdig
+
+commit 195c5cb47497688513d5b975515e202574c363ac
+Author: Mezzeto <Mathias_Lundby@hotmail.com>
+Date:   Thu Oct 4 16:45:21 2018 +0200
+
+    Oppgave 4 ferdig
+
+    Oppgave 4 ferdig
+
+commit e1da5bcdd8138671b3fcd21b0c77d52b069ef9b8
+Author: Mezzeto <Mathias_Lundby@hotmail.com>
+Date:   Thu Oct 4 16:07:27 2018 +0200
+
+    Oppgave 3 ferdig
+
+    Oppgave 3 ferdig
+
+commit 7e3403a618572882c64df849f58e9582d7e21f28
+Author: Mezzeto <Mathias_Lundby@hotmail.com>
+Date:   Thu Oct 4 15:26:05 2018 +0200
+
+    Oppgave 2 ferdig
+
+    Oppgave 2 ferdig
+
+commit 6821e910aa667cec05fc394c55a9cbf2adf331cb
+Author: Mezzeto <Mathias_Lundby@hotmail.com>
+Date:   Thu Oct 4 13:31:51 2018 +0200
+
+    Oppgave 1 gjort
+	
+    Oppgave 1 gjort
