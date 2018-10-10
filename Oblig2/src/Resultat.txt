@@ -1,0 +1,6 @@
+Gratulerer!! Du passerte testen!
+
+På min bærbare pc, som er litt treigere, fikk jeg noen ganger beskjed
+om at oppgave 2 og 6 var for ineffektive.
+Siden dette ikke var konsekvent tok jeg utgangspunkt i at det var min
+pc det var noe feil med, og ikke koden.

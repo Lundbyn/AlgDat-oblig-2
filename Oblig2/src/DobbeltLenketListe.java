@@ -3,7 +3,6 @@ import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
-import java.util.function.Predicate;
 
 public class DobbeltLenketListe<T> implements Liste<T>
 {
@@ -327,30 +326,31 @@ public class DobbeltLenketListe<T> implements Liste<T>
     @Override
     public void nullstill()
     {
-/*
         double tic = System.currentTimeMillis();
         while (hode != null) {
             fjern(0);
         }
         double toc = System.currentTimeMillis();
         double tid = toc-tic;
-*/
 
-//Denne er raskere enn den metoden over.
+/*
+        //Denne er treigere enn metoden over
+
         double tic = System.currentTimeMillis();
         int antall_start = antall;
         Node<T> p = hode;
         Node<T> q = hode;
         for(int i = 0; i < antall_start; i++) {
-            p = q;
-            q = q.neste;
-
-            p = null;
+            p = p.neste;
+            q.forrige = null;
+            q.neste = null;
+            q = p;
             antall--;
             endringer++;
         }
         double toc = System.currentTimeMillis();
         double tid = toc-tic;
+*/
     }
 
     //Oppgave 2 a
@@ -399,17 +399,17 @@ public class DobbeltLenketListe<T> implements Liste<T>
 
     //Oppgave 10
     public static <T> void sorter (Liste<T> liste, Comparator<? super T> c){
-        for (int n = liste.antall(); n > 0; n--){       //Ittererer gjennom listen n antall ganger.
-            Iterator<T> iterator = liste.iterator();    //Oppretter ny iterator hver gang
-            int m = 0;                                  //Setter temp m(indeks til minsteverdi) til 0
-            T minverdi = iterator.next();               //Setter temp minsteverdi til første verdi i lenken.
-            for (int i = 1; i < n; i++){                //Itterer gjennom resten av lenken frem til n
-                T verdi = iterator.next();
-                if (c.compare(verdi,minverdi) < 0){
-                    m = i; minverdi = verdi;
+        for (int n = liste.antall(); n > 0; n--){
+            Iterator<T> iterator = liste.iterator();    //Oppretter ny iterator hver iterasjon
+            int m = 0;                                  //Setter m(indeks til midlertidig minsteverdi) til 0
+            T minverdi = iterator.next();               //Setter midlertidig minsteverdi til første verdi i lenken.
+            for (int i = 1; i < n; i++){                //Itterer gjennom lenken frem til n
+                T verdi = iterator.next();              //Stter verdi lik neste verdi i lenken
+                if (c.compare(verdi,minverdi) < 0){     //Sammenligner minsteverdi med verdi for å se om verdi er mindre
+                    m = i; minverdi = verdi;            //Dersom verdi er mindre blir minsteverdi oppdatert
                 }
             }
-            liste.leggInn(liste.fjern(m));  //Fjerner fjerner minste verdien fra lista og legger den til bakerst.
+            liste.leggInn(liste.fjern(m));  //Fjerner minste verdien fra lista og legger den til bakerst.
         }
     }
 
